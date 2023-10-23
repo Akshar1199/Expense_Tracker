@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Expense_Tracker_System.Models.Category>
+
+@{
+    ViewData["Title"] = "List of Categories";
+}
+
+<!-- Include custom CSS -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid #ccc;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    thead {
+        background-color: #333;
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    }
+</style>
+
+<div class="container">
+    <h1 class="text-center">List of Categories</h1>
+
+    <div class="text-right mb-3">
+        <a asp-action="Create" class="btn btn-primary">Create New Category</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().Title)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Description)</th>
+                    <th>@Html.DisplayNameFor(model => model.First().Type)</th>
+                    <th>Edit</th>
+                    <th>Details</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Type)</td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-warning">Edit</a>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.CategoryId" class="btn btn-info">Details</a>
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+      

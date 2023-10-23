@@ -1,0 +1,123 @@
+﻿@model Expense_Tracker_System.Models.Category
+
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <!-- Income-->
+        <div class="d-flex flex-row widget summary income">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <h1 style="color: lightgreen">&#x20B9</h1>
+            </div>
+            <div class="d-flex flex-column m-auto py-1">
+                <span class="text-center">Total Income</span>
+                <h1 class="display-6 fw-bold">&#x20B9 @ViewBag.TotalIncome</h1>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <!-- Expense -->
+        <div class="d-flex flex-row widget summary expense">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <h1 style="color: #ff4e48">&#x20B9</h1>
+            </div>
+            <div class="d-flex flex-column m-auto py-1">
+                <span class="text-center">Total Expense</span>
+                <h1 class="display-6 fw-bold">&#x20B9 @ViewBag.TotalExpense</h1>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <!-- Balance -->
+        <div class="d-flex flex-row widget summary balance">
+            <div class="d-flex flex-column justify-content-center p-4">
+                <h1 style="color: #2aa1ff">&#x20B9</h1>
+            </div>
+            <div class="d-flex flex-column m-auto py-1">
+                <span class="text-center">Balance</span>
+                <h1 class="display-6 fw-bold">&#x20B9 @ViewBag.Balance</h1>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <div class="widget chart">
+            <div class="p-4">
+                <h5 class="text-center">Pie Chart</h5>
+                <canvas id="myChart" style="width:100%;max-width:600px; height:300px;"></canvas>
+                
+
+                <script>
+                    const xValues = ["Income", "Expense", "Balance"];
+                    const yValues = [@ViewBag.Income, @ViewBag.Expense, @ViewBag.Balnce];
+
+                    const barColors = [
+                        "#b91d25",
+                        "#00abb5",
+                        "#2b5705",
+                    ];
+
+                    new Chart("myChart", {
+                        type: "doughnut",
+                        data: {
+                            labels: xValues,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: yValues
+                            }]
+                        },
+                    });
+                </script>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="widget chart">
+
+            <div id="myPlot" style="width:100%;max-width:700px; height: 380px"></div>
+
+            
+
+            <script>
+                const xArray = ["Income", "Expense", "Balance"];
+                const yArray = [@ViewBag.Income, @ViewBag.Expense, @ViewBag.Balnce];
+
+                const data = [{
+                    x: xArray,
+                    y: yArray,
+                    type: "bar",
+                    orientation: "v",
+                    marker: { color: "rgba(0,0,355,0.6)" }
+                }];
+
+                const layout = { title: "Bar Chart" };
+
+                Plotly.newPlot("myPlot", data, layout);
+            </script>
+
+        </div>
+    </div>
+</div>
+

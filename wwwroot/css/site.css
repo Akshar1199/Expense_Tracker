@@ -1,0 +1,54 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-control{
+    background-color: transparent;
+}
+
+.form-group{
+    margin: 15px;
+}
+
+.alink{
+    margin-left: 14px;
+}
+
+.widget{
+    border-radius: 1rem;
+    background-color: whitesmoke;
+}
+
+.main-content{
+    margin-left: 280px;
+}
+
+.widget.summary > div:first-child{
+    background-color: #222b33;
+    padding: 1rem;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+}
+
+.widget.summary > div:first-child i{
+    font-weight: bold;
+}
+
+.widget.chart{
+    padding: 5px;
+}

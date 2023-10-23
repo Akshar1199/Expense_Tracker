@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Expense_Tracker_System.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<html>
+
+<body>
+
+<h1>List of Transaction</h1>
+
+<p>
+    <a asp-action="Create">Create New Transaction</a>
+</p>
+
+<table class="table table-bordered" id="transactions">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>Details</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.TransactionId">Details</a>
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+</body>
+
+</html>
