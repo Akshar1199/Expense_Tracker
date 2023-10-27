@@ -52,10 +52,10 @@ namespace Expense_Tracker_System.Controllers
 
             ViewBag.Balance = Balance.ToString("#,##0.00");
 
-            return View();
-
+            return View(SelectedTransactions);
 
 
         }
     }
 }
+
