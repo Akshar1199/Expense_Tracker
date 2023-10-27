@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Expense_Tracker_System.Models
@@ -19,5 +20,8 @@ namespace Expense_Tracker_System.Models
         // Default type is expense
         [Column(TypeName = "nvarchar(10)")]
         public string Type { get; set; } = "Expense";
+
+
+        
     }
 }

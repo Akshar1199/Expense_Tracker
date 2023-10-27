@@ -55,6 +55,8 @@ namespace Expense_Tracker_System.Controllers
         }
 
         // POST: Transaction/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TransactionId,CategoryId,Amount,Description,Date")] Transaction transaction)
@@ -88,6 +90,63 @@ namespace Expense_Tracker_System.Controllers
 
             return View(transaction);
         }
+
+
+        // GET: Transaction/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.Transactions == null)
+            {
+                return NotFound();
+            }
+
+            var transaction = await _context.Transactions
+                .Include(t => t.Category)
+                .FirstOrDefaultAsync(m => m.TransactionId == id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Title", transaction.CategoryId);
+            return View(transaction);
+        }
+
+        // POST: Transaction/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("TransactionId,CategoryId,Amount,Description,Date")] Transaction transaction)
+        {
+            if (id != transaction.TransactionId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(transaction);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TransactionExists(transaction.TransactionId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Title", transaction.CategoryId);
+            return View(transaction);
+        }
+
 
         // POST: Transaction/Delete/5
         [HttpPost, ActionName("Delete")]

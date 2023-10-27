@@ -5,6 +5,19 @@
     ViewData["Title"] = "Dashboard";
 }
 
+
+<form method="get">
+    <div class="form-group">
+        <label for="option">Select Option:</label>
+        <select id="option" name="option" class="form-control">
+            
+            <option value="monthly">Month</option>
+            <option value="weekly">Week</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Apply</button>
+    </div>
+</form>
+
 <div class="row mb-4">
 
     <div class="col-md-4">
@@ -120,3 +133,36 @@
         </div>
     </div>
 </div>
+
+
+@if (ViewBag.RecentTransactions != null && ViewBag.RecentTransactions.Count > 0)
+{
+    <h3>Recent Transactions (Last 5 Days)</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in ViewBag.RecentTransactions)
+            {
+                <tr>
+                    <td>@transaction.Category.Title</td>
+                    <td>@transaction.Date.ToShortDateString()</td>
+                    <td>&#x20B9; @transaction.Amount.ToString("#,##0.00")</td>
+                    <td>@transaction.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No recent transactions found.</p>
+}
+
+

@@ -1,6 +1,7 @@
 ﻿using Expense_Tracker_System.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 
 namespace Expense_Tracker_System.Controllers
@@ -13,16 +14,38 @@ namespace Expense_Tracker_System.Controllers
         {
             _context = context;
         }
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(string option)
         {
-            // Last 1 Month Transactions
-            DateTime StartDate = DateTime.Today.AddDays(-28);
-            DateTime EndDate = DateTime.Today;
+           
+            DateTime StartDate, EndDate;
+
+            if (option == "monthly")
+            {
+                // Last 1 Month Transactions
+                
+                StartDate = DateTime.Today.AddMonths(-1);
+                EndDate = DateTime.Today;
+            }
+            else if (option == "weekly")
+            {
+                // Last 1 Week Transactions
+                
+                StartDate = DateTime.Today.AddDays(-7);
+                EndDate = DateTime.Today;
+            }
+            else
+            {
+                // Handle other cases or provide a default date range
+                // For example, if option is not provided or invalid, use the default date range for a month:
+                StartDate = DateTime.Today.AddMonths(-1);
+                EndDate = DateTime.Today;
+            }
+
 
             List<Transaction> SelectedTransactions = await _context.Transactions
-                .Include(x => x.Category)
-                .Where(y => y.Date >= StartDate && y.Date <= EndDate)
-                .ToListAsync();
+               .Include(x => x.Category)
+               .Where(y => y.Date >= StartDate && y.Date <= EndDate)
+               .ToListAsync();
 
 
             // Total Income
@@ -53,9 +76,19 @@ namespace Expense_Tracker_System.Controllers
 
             ViewBag.Balnce = Balance;
 
+            
+
+            DateTime RecentStartDate = DateTime.Today.AddDays(-5);
+            DateTime RecentEndDate = DateTime.Today;
+
+            List<Transaction> RecentTransactions = await _context.Transactions
+               .Include(x => x.Category)
+               .Where(y => y.Date >= RecentStartDate && y.Date <= RecentEndDate)
+               .ToListAsync();
+
+            ViewBag.RecentTransactions = RecentTransactions;
+
             return View(SelectedTransactions);
-
-
         }
     }
 }

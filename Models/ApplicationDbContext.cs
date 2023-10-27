@@ -11,6 +11,7 @@ namespace Expense_Tracker_System.Models
 
         }
 
+
         public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<Category> Categories { get; set; }
